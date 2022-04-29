@@ -1,0 +1,5 @@
+package com.webshopify.ecomm.dao;
+
+public interface UserDao {
+
+}

@@ -1,0 +1,17 @@
+package com.webshopify.ecomm.config;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+@Configuration
+public class AppConfig {
+
+	@Bean
+	public DataSource mySqlDs() {
+		DataSource dataSource = new DriverManagerDataSource();
+		return dataSource;
+	}
+}

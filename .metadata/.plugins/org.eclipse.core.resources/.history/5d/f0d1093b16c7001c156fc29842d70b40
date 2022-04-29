@@ -1,0 +1,5 @@
+package com.webshopify.ecomm.config;
+
+public class AppConfig {
+
+}

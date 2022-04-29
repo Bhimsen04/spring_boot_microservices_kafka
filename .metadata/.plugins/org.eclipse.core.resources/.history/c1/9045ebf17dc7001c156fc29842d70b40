@@ -1,0 +1,30 @@
+package com.webshopify.ecomm.config;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+@Configuration
+public class AppConfig {
+
+//	@Bean
+//	@Profile("mysql")
+//	public DataSource mySqlDs() {
+//		System.out.println("MySQL DB is connecting");
+//		DataSource dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/shopifyme", "root", "bhim");
+//		return dataSource;
+//	}
+//
+//	@Bean
+//	@Profile("h2")
+//	public DataSource h2DB() {
+//		System.out.println("h2 DB is connecting");
+//		DataSource dataSource = new DriverManagerDataSource("jdbc:h2:testDb", "sa", "");
+//		return dataSource;
+//	}
+	
+	
+}

@@ -1,0 +1,12 @@
+package com.webshopify.ecomm.dao;
+
+import java.util.List;
+
+public class MySQLUserDao implements UserDao {
+
+	public List<String> getAllUsers() {
+		
+		return null;
+	}
+
+}
