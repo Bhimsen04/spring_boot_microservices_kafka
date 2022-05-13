@@ -1,6 +1,0 @@
-package com.webshopify.ecomm.dao;
-
-public interface UserDao {
-
-	public List<String> getAllUsers();
-}
