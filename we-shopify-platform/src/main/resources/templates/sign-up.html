@@ -40,6 +40,9 @@
             <div class="card-header">
                 <h3 class="mb-1">Registrations Form</h3>
                 <p>Please enter your user information.</p>
+                <div th:if="${message}"/>
+                	<font color="green"><p>Registration Success Please Click
+                	<a href="/home">Here</a>To Login</p></font>
             </div>
             <div class="card-body">
                 <div class="form-group">
