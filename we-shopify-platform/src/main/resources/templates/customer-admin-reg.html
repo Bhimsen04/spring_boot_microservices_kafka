@@ -297,7 +297,7 @@
 								<div id="submenu-5" class="collapse submenu" style="">
 									<ul class="nav flex-column">
 										<li class="nav-item"><a class="nav-link"
-											th:href="@{/customer-admin-reg}">Add Customers</a></li>
+											th:href="@{/customer}">Add Customers</a></li>
 										<li class="nav-item"><a class="nav-link"
 											th:href="@{/view-customers}">View Customers</a></li>
 									</ul>
@@ -331,7 +331,7 @@
 											class="breadcrumb-link">Dashboard</a></li>
 										<li class="breadcrumb-item"><a href="#"
 											class="breadcrumb-link">Customers</a></li>
-										<li class="breadcrumb-item active" aria-current="page">view
+										<li class="breadcrumb-item active" aria-current="page">Add
 											customers</li>
 									</ol>
 								</nav>
@@ -342,109 +342,130 @@
 				<!-- ============================================================== -->
 				<!-- end pageheader -->
 				<!-- ============================================================== -->
-				<div class="row">
-					<!-- ============================================================== -->
-					<!-- basic table  -->
-					<!-- ============================================================== -->
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-						<div class="card">
-							<!-- <h5 class="card-header">Customer Details</h5> -->
-							<div class="card-body">
-								<div class="table-responsive">
-									<table class="table table-striped table-bordered first">
-										<thead>
-											<tr>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>UserId</th>
-												<th>Email</th>
-												<th>Mobile Number</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="customer : ${customerList}">
-												<td><p th:text="${{customer.firstName}}"></td>
-												<td><p th:text="${{customer.lastName}}"></td>
-												<td><p th:text="${{customer.userName}}"></td>
-												<td><p th:text="${{customer.email}}"></td>
-												<td><p th:text="${{customer.mobileNumber}}"></td>
-												<td><a
-													th:href="@{'/edit-customers/' + ${customer.customerId}}"><span
-														class="glyphicon glyphicon-edit">Edit</span> </a><a
-													th:href="@{'/delete-customers/' + ${customer.customerId}}"><span
-														class="glyphicon glyphicon-remove">Delete</span> </a></td>
-											</tr>
-										</tbody>
-									</table>
+				<!-- signup form  -->
+				<!-- ============================================================== -->
+				<form class="splash-container" th:action="@{/customer}"
+					method="post" th:object="${customer}">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="mb-1">Registrations Form</h3>
+							<p>Please enter your user information.</p>
+							<div th:if="${message}">
+								<font color="green"> Registration Success Please Click <a
+									href='/home'>Here</a>To Login
+								</font>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="form-group">
+								<input class="form-control form-control-lg" type="text"
+									name="firstName" required="" placeholder="FirstName"
+									autocomplete="off" th:value="*{firstName}">
+							</div>
+							<div class="form-group">
+								<input class="form-control form-control-lg" type="text"
+									name="lastName" required="" placeholder="LastName"
+									autocomplete="off" th:value="*{lastName}">
+							</div>
+							<div class="form-group">
+								<input class="form-control form-control-lg" type="text"
+									name="userName" required="" placeholder="Username"
+									autocomplete="off" th:value="*{userName}">
+							</div>
+							<div class="form-group">
+								<input class="form-control form-control-lg" type="email"
+									name="email" required="" placeholder="E-mail"
+									autocomplete="off" th:value="*{email}">
+							</div>
+							<div class="form-group">
+								<input class="form-control form-control-lg" id="pass1"
+									type="password" name="password" required=""
+									placeholder="Password" th:value="*{password}">
+							</div>
+							<div class="form-group">
+								<input class="form-control form-control-lg" type="text"
+									name="mobileNumber" required="" placeholder="Mobile NUmber"
+									autocomplete="off" th:value="*{mobileNumber}">
+							</div>
+							<div class="form-group">
+								<input type="hidden" name="customerId" th:value="*{customerId}">
+							</div>
+							<div th:if="*{customerId}">
+								<div class="form-group pt-2">
+									<button class="btn btn-block btn-primary" type="submit">Update
+										My Account</button>
+								</div>
+							</div>
+							<div th:unless="*{customerId}">
+								<div class="form-group pt-2">
+									<button class="btn btn-block btn-primary" type="submit">Register
+										My Account</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- ============================================================== -->
-					<!-- end basic table  -->
-					<!-- ============================================================== -->
-				</div>
-				<!-- ============================================================== -->
-				<!-- footer -->
-				<!-- ============================================================== -->
-				<div class="footer">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-								Copyright © 2022 Weshopify. All rights reserved. Dashboard by <a
-									href="https://colorlib.com/wp/">Bhimsen</a>.
-							</div>
-							<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-								<div class="text-md-right footer-links d-none d-sm-block">
-									<a href="javascript: void(0);">About</a> <a
-										href="javascript: void(0);">Support</a> <a
-										href="javascript: void(0);">Contact Us</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- ============================================================== -->
-				<!-- end footer -->
-				<!-- ============================================================== -->
+				</form>
 			</div>
+			<!-- ============================================================== -->
+			<!-- footer -->
+			<!-- ============================================================== -->
+			<div class="footer">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+							Copyright © 2022 Weshopify. All rights reserved. Dashboard by <a
+								href="https://colorlib.com/wp/">Bhimsen</a>.
+						</div>
+						<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="text-md-right footer-links d-none d-sm-block">
+								<a href="javascript: void(0);">About</a> <a
+									href="javascript: void(0);">Support</a> <a
+									href="javascript: void(0);">Contact Us</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ============================================================== -->
+			<!-- end footer -->
+			<!-- ============================================================== -->
 		</div>
-		<!-- ============================================================== -->
-		<!-- end main wrapper -->
-		<!-- ============================================================== -->
-		<!-- Optional JavaScript -->
-		<script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-		<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-		<script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-		<script src="../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
-		<script src="../assets/libs/js/main-js.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-		<script
-			src="../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-		<script src="../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
-		<script src="../assets/vendor/datatables/js/data-table.js"></script>
-		<script
-			src="../../../../../cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-		<script
-			src="../../../../../cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-		<script
-			src="../../../../../cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-		<script
-			src="../../../../../cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+	</div>
+	<!-- ============================================================== -->
+	<!-- end main wrapper -->
+	<!-- ============================================================== -->
+	<!-- Optional JavaScript -->
+	<script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+	<script src="../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
+	<script src="../assets/libs/js/main-js.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script
+		src="../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script src="../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
+	<script src="../assets/vendor/datatables/js/data-table.js"></script>
+	<script
+		src="../../../../../cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script
+		src="../../../../../cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script
+		src="../../../../../cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+	<script
+		src="../../../../../cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 </body>
 
 </html>

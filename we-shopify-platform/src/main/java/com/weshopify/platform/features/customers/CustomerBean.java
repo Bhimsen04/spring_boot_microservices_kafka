@@ -12,10 +12,37 @@ public class CustomerBean implements Serializable {
 	 */
 	private static final long serialVersionUID = -3392255258797133035L;
 	private int customerId;
+	private String firstName;
+	private String lastName;
 	private String userName;
 	private String email;
 	private String mobileNumber;
 	private String password;
+	private boolean selfReg = false;
+
+	public boolean isSelfReg() {
+		return selfReg;
+	}
+
+	public void setSelfReg(boolean selfReg) {
+		this.selfReg = selfReg;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	public int getCustomerId() {
 		return customerId;
@@ -59,8 +86,9 @@ public class CustomerBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CustomerBean [userName=" + userName + ", email=" + email + ", mobileNumber=" + mobileNumber
-				+ ", password=" + password + "]";
+		return "CustomerBean [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", userName=" + userName + ", email=" + email + ", mobileNumber=" + mobileNumber + ", password="
+				+ password + "]";
 	}
 
 	@Override
@@ -69,6 +97,8 @@ public class CustomerBean implements Serializable {
 		int result = 1;
 		result = prime * result + customerId;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((mobileNumber == null) ? 0 : mobileNumber.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
@@ -90,6 +120,16 @@ public class CustomerBean implements Serializable {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
 			return false;
 		if (mobileNumber == null) {
 			if (other.mobileNumber != null)
