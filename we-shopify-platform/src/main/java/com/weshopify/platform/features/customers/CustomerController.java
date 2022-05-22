@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.weshopify.platform.features.customers.service.CustomerService;
 
-@Controller
-public class CustomerController {
+import lombok.extern.slf4j.Slf4j;
 
-	Logger log = LoggerFactory.getLogger(CustomerController.class);
+@Controller
+@Slf4j
+public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
@@ -87,12 +86,12 @@ public class CustomerController {
 			log.info("Data entered by the user contains the error");
 			List<FieldError> fieldErrors = validationResult.getFieldErrors();
 			fieldErrors.stream().forEach(fe -> {
-				log.error("Field Errors: {}", fe.getDefaultMessage());
+				log.error("Field Errors: {} -> {}", fe.getField(), fe.getDefaultMessage());
 				errorsList.add(fe.getDefaultMessage());
 			});
-			model.addAttribute("errors", errorsList);
+			model.addAttribute("errors", fieldErrors);
 			model.addAttribute("customer", customer);
-			return "customer-admin-reg.html";
+			return customer.isSelfReg() ? "sign-up.html" : "customer-admin-reg.html";
 		}
 		customer = customerService.saveCustomer(customer);
 		log.info("with customer ID: {} ", customer.toString());
@@ -100,9 +99,7 @@ public class CustomerController {
 			String message = "User registration success. Proceed with login";
 			model.addAttribute("message", message);
 		}
-		if (customer.isSelfReg())
-			return "sign-up.html";
-		return "redirect:/view-customers"; // redirecting to the controller
+		return customer.isSelfReg() ? "sign-up.html" : "redirect:/view-customers"; // redirecting to the controller
 	}
 
 }

@@ -49,6 +49,11 @@ body {
 							Login
 						</p></font>
 				</div>
+				<div th:if="${errors}">
+					<font color='red' th:each="error:${errors}">
+						<p th:text='${{error}}'></p>
+					</font>
+				</div>
 			</div>
 			<div class="card-body">
 				<div class="form-group">

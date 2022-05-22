@@ -96,8 +96,9 @@
 									href='/home'>Here</a>To Login
 								</font>
 							</div>
+							<!-- print validation errors on form level -->
 							<div th:if="${errors}">
-								<font color='red' th:each="error:${errors}"> 
+								<font color='red' th:each="error:${errors}">
 									<p th:text='${{error}}'></p>
 								</font>
 							</div>

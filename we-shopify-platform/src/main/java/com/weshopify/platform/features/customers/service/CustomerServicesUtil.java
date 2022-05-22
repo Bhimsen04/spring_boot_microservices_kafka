@@ -1,8 +1,6 @@
 package com.weshopify.platform.features.customers.service;
 
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -12,10 +10,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.weshopify.platform.features.customers.commons.EmailDomainStatus;
 
-@Service
-public class CustomerServicesUtil {
+import lombok.extern.slf4j.Slf4j;
 
-	private static final Logger log = LoggerFactory.getLogger(CustomerServicesUtil.class);
+@Service
+@Slf4j
+public class CustomerServicesUtil {
 
 	@Autowired // we're pulling the bean from the Spring Container
 	private RestTemplate restTemplate;
