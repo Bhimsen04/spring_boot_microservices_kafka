@@ -3,6 +3,7 @@ package com.weshopify.platform.features.customers;
 import java.io.Serializable;
 import javax.validation.constraints.Pattern;
 
+import com.weshopify.platform.features.customers.commons.EmailDomainValid;
 import com.weshopify.platform.features.customers.commons.PasswordValidator;
 
 import javax.validation.constraints.Email;
@@ -28,6 +29,7 @@ public class CustomerBean implements Serializable {
 
 	@NotEmpty(message = "email shouldn't be empty")
 	@Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+	@EmailDomainValid(message = "email domain is not valid, please enter valid domain")
 	private String email;
 
 	@Pattern(regexp = "^([+]\\d{2})?\\d{10}$", message = "Mobile Number should be of minimum 10 digits")

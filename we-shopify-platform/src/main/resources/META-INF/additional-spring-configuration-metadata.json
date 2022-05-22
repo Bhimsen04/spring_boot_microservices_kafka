@@ -1,0 +1,19 @@
+{
+	"properties": [
+		{
+			"name": "email.domain.validate.api",
+			"type": "java.lang.String",
+			"description": "AbstractApi third party validate the email"
+		},
+		{
+			"name": "email.domain.validate.api.key",
+			"type": "java.lang.String",
+			"description": "api key name"
+		},
+		{
+			"name": "email.domain.validate.api.value",
+			"type": "java.lang.String",
+			"description": "api key value"
+		}
+	]
+}
