@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -78,7 +79,7 @@ public class CustomerController {
 	 */
 
 	@RequestMapping(value = { "/customer" }, method = RequestMethod.POST)
-	public String createCustomer(@Valid CustomerBean customer, BindingResult validationResult, Model model) {
+	public String createCustomer(@ModelAttribute("customer") @Valid CustomerBean customer, BindingResult validationResult, Model model) {
 		List<String> errorsList = new ArrayList<>();
 		log.info("Is customer self registered: {}", customer.isSelfReg());
 		log.info("w/o customer ID: {} ", customer.toString());
@@ -89,8 +90,11 @@ public class CustomerController {
 				log.error("Field Errors: {} -> {}", fe.getField(), fe.getDefaultMessage());
 				errorsList.add(fe.getDefaultMessage());
 			});
-			model.addAttribute("errors", fieldErrors);
-			model.addAttribute("customer", customer);
+			/*
+			 * commenting this bcz now we are using @ModelAttribute
+			 * model.addAttribute("errors", errorsList); model.addAttribute("customer",
+			 * customer);
+			 */
 			return customer.isSelfReg() ? "sign-up.html" : "customer-admin-reg.html";
 		}
 		customer = customerService.saveCustomer(customer);
