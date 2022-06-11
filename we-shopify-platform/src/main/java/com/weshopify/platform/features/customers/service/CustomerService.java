@@ -14,5 +14,7 @@ public interface CustomerService {
 	
 	//filter Parameters 
 	public List<CustomerBean> searchCustomer();
+
+	public List<CustomerBean> findAllCustomers(int currentPage, int noOfRecPerPage);
 	
 }

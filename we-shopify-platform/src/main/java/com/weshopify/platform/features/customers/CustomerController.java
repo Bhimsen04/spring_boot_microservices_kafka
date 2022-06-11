@@ -42,9 +42,24 @@ public class CustomerController {
 	@RequestMapping("/view-customers")
 	public String viewCustomerPage(Model model) {
 		log.info("In viewCustomerPage() method");
-		List<CustomerBean> customerList = customerService.findAllCustomers();
-		log.info("CustomerList : {} ", customerList);
-		model.addAttribute("customerList", customerList);
+		int currentPage = 0, NoOfRecPerPage = 5;
+		List<CustomerBean> customersList = customerService.findAllCustomers(currentPage, NoOfRecPerPage);
+		log.info("customersList : {} ", customersList);
+		model.addAttribute("currentPage", currentPage + 1);
+		model.addAttribute("NoOfRecPerPage", NoOfRecPerPage);
+		model.addAttribute("customersList", customersList);
+		return "customer.html";
+	}
+
+	@RequestMapping("/view-customers/{currentPage}/{NoOfRecPerPage}")
+	public String viewCustomerPageByPagination(Model model, @PathVariable("currentPage") int currentPage,
+			@PathVariable("NoOfRecPerPage") int NoOfRecPerPage) {
+		log.info("In viewCustomerPageByPagination() method");
+		List<CustomerBean> customersList = customerService.findAllCustomers(currentPage, NoOfRecPerPage);
+		log.info("customersList : {} ", customersList);
+		model.addAttribute("currentPage", currentPage + 1);
+		model.addAttribute("NoOfRecPerPage", NoOfRecPerPage);
+		model.addAttribute("customersList", customersList);
 		return "customer.html";
 	}
 
@@ -79,7 +94,8 @@ public class CustomerController {
 	 */
 
 	@RequestMapping(value = { "/customer" }, method = RequestMethod.POST)
-	public String createCustomer(@ModelAttribute("customer") @Valid CustomerBean customer, BindingResult validationResult, Model model) {
+	public String createCustomer(@ModelAttribute("customer") @Valid CustomerBean customer,
+			BindingResult validationResult, Model model) {
 		List<String> errorsList = new ArrayList<>();
 		log.info("Is customer self registered: {}", customer.isSelfReg());
 		log.info("w/o customer ID: {} ", customer.toString());
