@@ -324,6 +324,7 @@
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<div class="page-header">
 							<h2 class="pageheader-title">Customer Details</h2>
+
 							<p class="pageheader-text">Proin placerat ante duiullam
 								scelerisque a velit ac porta, fusce sit amet vestibulum mi.
 								Morbi lobortis pulvinar quam.</p>
@@ -349,6 +350,34 @@
 					<!-- ============================================================== -->
 					<!-- basic table  -->
 					<!-- ============================================================== -->
+					<!-- DropDown start -->
+					<div class="card-body border-top" align="right">
+						<div class="form-group">
+							<!-- <div class="input-group mb-3">
+										<input type="text" class="form-control">
+										<div class="input-group-append be-addon">
+											<button type="button" data-toggle="dropdown"
+												class="btn btn-secondary dropdown-toggle">Search By</button>
+											<div class="dropdown-menu">
+												<a href="#" class="dropdown-item">Email</a><a href="#"
+													class="dropdown-item">User Name</a><a href="#"
+													class="dropdown-item">Mobile</a>
+												<div class="dropdown-divider"></div>												
+											</div>
+										</div>
+									</div> -->
+							<form th:action="@{/search-customers}" method="post">
+								<label>Search:</label> <select name="searchKey">
+									<option>By Email</option>
+									<option>By Mobile</option>
+									<option>By UserName</option>
+								</select> <input type="text" name="searchText" />
+								<button class="btn-primary" type="submit">Submit</button>
+							</form>
+						</div>
+					</div>
+
+					<!-- DropDown end -->
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<div class="card">
 							<!-- <h5 class="card-header">Customers Details</h5> -->

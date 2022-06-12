@@ -16,14 +16,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.weshopify.platform.features.customers.CustomerBean;
+import com.weshopify.platform.features.customers.commons.CustomerSearchOptions;
 import com.weshopify.platform.features.customers.models.Customer;
 import com.weshopify.platform.features.customers.repository.CustomerDataRepo;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author IM-LP-1763
  *
  */
 @Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
 //	private static Set<CustomerBean> IN_MEMORY_DB = new HashSet<CustomerBean>();
@@ -126,6 +130,28 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<CustomerBean> searchCustomer() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<CustomerBean> searchAllCustomers(String searchKey, String searchText) {
+		List<Customer> customerDomainList = null;
+		if (CustomerSearchOptions.valueOf(CustomerSearchOptions.BY_EMAIL.name()).key.equalsIgnoreCase(searchKey))
+			customerDomainList = customerRepo.searchByEmail(searchText);
+		else if (CustomerSearchOptions.valueOf(CustomerSearchOptions.BY_Mobile.name()).key.equalsIgnoreCase(searchKey))
+			customerDomainList = customerRepo.searchByMobileNumber(searchText);
+		else
+			customerDomainList = customerRepo.searchByUserName(searchText);
+		log.info("customerDomainList : {} ", customerDomainList);
+		if (customerDomainList != null && !customerDomainList.isEmpty()) {
+			List<CustomerBean> customerList = new ArrayList<>();
+			customerDomainList.stream().forEach(customer -> {
+				CustomerBean customerBean = new CustomerBean();
+				BeanUtils.copyProperties(customer, customerBean);
+				customerList.add(customerBean);
+			});
+			return customerList;
+		} else
+			throw new RuntimeException("No customer found with the given search criteria:- " + searchKey);
 	}
 
 }

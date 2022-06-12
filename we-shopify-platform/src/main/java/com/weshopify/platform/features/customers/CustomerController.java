@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.weshopify.platform.features.customers.models.Customer;
 import com.weshopify.platform.features.customers.service.CustomerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,9 +68,9 @@ public class CustomerController {
 	@RequestMapping("/delete-customers/{customerId}")
 	public String deletCustomer(@PathVariable("customerId") int customerId, Model model) {
 		log.info("Deleting Customer {}: ", customerId);
-		List<CustomerBean> customerList = customerService.deleteCustomer(customerId);
-		log.info("Current CustomerList : {} ", customerList);
-		model.addAttribute("customerList", customerList);
+		List<CustomerBean> customersList = customerService.deleteCustomer(customerId);
+		log.info("Current CustomerList : {} ", customersList);
+		model.addAttribute("customersList", customersList);
 		return "customer.html";
 	}
 
@@ -120,6 +122,16 @@ public class CustomerController {
 			model.addAttribute("message", message);
 		}
 		return customer.isSelfReg() ? "sign-up.html" : "redirect:/view-customers"; // redirecting to the controller
+	}
+
+	@RequestMapping(value = {"/search-customers"}, method = RequestMethod.POST)
+	public String searchCustomer(@RequestParam("searchKey") String searchKey,
+			@RequestParam("searchText") String searchText, Model model) {
+		log.info("In searchCustomer() method: ");
+		log.info("searchKey:- " + searchKey + " , searchText:- " + searchText);
+		List<CustomerBean> customersList = customerService.searchAllCustomers(searchKey, searchText);
+		model.addAttribute("customersList", customersList);
+		return "customer.html";
 	}
 
 }
