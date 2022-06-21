@@ -19,7 +19,7 @@ public class CustomerServicesUtil {
 	@Autowired // we're pulling the bean from the Spring Container
 	private RestTemplate restTemplate;
 
-	@Value("${email.domain.validate.api}")
+	@Value("${email.domain.validate.api.endPoint}")
 	private String emailValidateApi;
 
 	@Value("${email.domain.validate.api.key}")

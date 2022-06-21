@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -24,12 +25,20 @@ public class Customer implements Serializable {
 	private boolean selfReg;
 	private String firstName;
 	private String lastName;
+	
 	@Column(unique = true, nullable = false, name = "username")
 	private String userName; // bydefault it is user_name
+	
 	@Column(unique = true, nullable = false)
 	private String email;
-	@Column(unique = true, updatable = true, nullable = false)
+	
+	// @Column(unique = true, updatable = true, nullable = false)
 	private String mobileNumber;
+	
+	@Column(nullable = false, updatable = true)
 	private String password;
+
+	@OneToOne
+	private UserRole role;
 
 }
