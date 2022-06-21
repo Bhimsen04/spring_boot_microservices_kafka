@@ -3,6 +3,7 @@ package com.weshopify.platform;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,6 +23,7 @@ public class CustomerPermissionsTest extends WeShopifyPlatformApplicationTests {
 	}
 
 	@Test
+	@Order(value = 1)
 	public void testCreatePermission() {
 		UserPermissions permissions = new UserPermissions();
 		permissions.setAction(action);

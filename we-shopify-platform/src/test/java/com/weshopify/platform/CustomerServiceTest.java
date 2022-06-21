@@ -21,11 +21,11 @@ import com.weshopify.platform.features.customers.CustomerBean;
 import com.weshopify.platform.features.customers.service.CustomerService;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class CustomerServiceTest extends WeShopifyPlatformApplicationTests {
+public class CustomerServiceTest extends CustomerRolesTest {
 	@Autowired
 	private CustomerService customerService;
 	static CustomerBean customer = null;
-
+	
 	@BeforeEach
 	public void init() {
 		System.out.println("before each test case");
@@ -50,7 +50,7 @@ public class CustomerServiceTest extends WeShopifyPlatformApplicationTests {
 	 */
 
 	@Test
-	@Order(value = 1)
+	@Order(value = 3)
 	public void testSaveCustomer() {
 		System.out.println("testSaveCustomer");
 		customer = customerService.saveCustomer(customer);
@@ -58,10 +58,12 @@ public class CustomerServiceTest extends WeShopifyPlatformApplicationTests {
 		assertNotNull(customer);
 		// assertNotNull(customer.getCustomerId());
 		assertNotEquals(0, customer.getCustomerId());
+		assertNotNull(customer.getRole());
+		assertNotNull("customer" , customer.getRole());
 	}
 
 	@Test
-	@Order(value = 2)
+	@Order(value = 4)
 	public void testUpdateCustomer() {
 		System.out.println("testUpdateCustomer");
 		String beforeUpdateEmail = customer.getEmail();
@@ -79,7 +81,7 @@ public class CustomerServiceTest extends WeShopifyPlatformApplicationTests {
 	}
 
 	@Test
-	@Order(value = 3)
+	@Order(value = 5)
 	public void testFindAllCustomers() {
 		System.out.println("testFindAllCustomers");
 		List<CustomerBean> customerList = customerService.findAllCustomers();
@@ -94,7 +96,7 @@ public class CustomerServiceTest extends WeShopifyPlatformApplicationTests {
 	}
 
 	@Test
-	@Order(value = 4)
+	@Order(value = 6)
 	public void testFindCustomerById() {
 		System.out.println("testFindCustomerById");
 		CustomerBean savedCustomer = customerService.findCustomerById(customer.getCustomerId());
@@ -104,7 +106,7 @@ public class CustomerServiceTest extends WeShopifyPlatformApplicationTests {
 	}
 
 	@Test
-	@Order(value = 5)
+	@Order(value = 7)
 	public void testDeleteCustomer() {
 		System.out.println("testDeleteCustomer");
 

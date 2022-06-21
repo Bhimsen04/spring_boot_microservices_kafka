@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import org.springframework.stereotype.Service;
 import com.weshopify.platform.features.customers.CustomerBean;
 import com.weshopify.platform.features.customers.commons.CustomerSearchOptions;
 import com.weshopify.platform.features.customers.models.Customer;
+import com.weshopify.platform.features.customers.models.UserRole;
 import com.weshopify.platform.features.customers.repository.CustomerDataRepo;
+import com.weshopify.platform.features.customers.repository.UserRolesDataRepo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +36,9 @@ public class CustomerServiceImpl implements CustomerService {
 //	private static Set<CustomerBean> IN_MEMORY_DB = new HashSet<CustomerBean>();
 	private static Map<Integer, CustomerBean> IN_MEMORY_DB = new HashMap<Integer, CustomerBean>();
 	private CustomerDataRepo customerRepo;
+
+	@Autowired
+	private UserRolesDataRepo rolesDataRepo;
 
 	@Autowired
 	public CustomerServiceImpl(CustomerDataRepo CustomerRepo) {
@@ -56,10 +62,12 @@ public class CustomerServiceImpl implements CustomerService {
 		// convert the bean data to domain to save in database
 		Customer customerDomain = new Customer();
 		BeanUtils.copyProperties(customerBean, customerDomain);
+		customerDomain.setRole(Optional.ofNullable(rolesDataRepo.getById(1)).orElse(null));
 		customerRepo.save(customerDomain);
 
 		// bcz now customerDomain have auto-generated key
 		customerBean.setCustomerId(customerDomain.getCustomerId());
+		customerBean.setRole(Optional.ofNullable(customerDomain.getRole()).map(UserRole::getRole).orElse(null));
 		BeanUtils.copyProperties(customerDomain, customerBean);
 		return customerBean;
 	}

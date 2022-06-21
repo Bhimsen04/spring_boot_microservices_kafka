@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class UserRole implements Serializable {
 	private String description;
 	private BigDecimal value;
 
-	@OneToMany(mappedBy = "role")
+	@OneToMany(mappedBy = "role" , cascade = CascadeType.ALL)
 	private List<RoleToPermissions> actions; // third table: user_role_actions
 
 }

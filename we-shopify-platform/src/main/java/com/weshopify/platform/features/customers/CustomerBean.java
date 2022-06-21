@@ -6,6 +6,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.data.annotation.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.weshopify.platform.features.customers.commons.EmailDomainValid;
 import com.weshopify.platform.features.customers.commons.PasswordValidator;
 
@@ -44,5 +47,9 @@ public class CustomerBean implements Serializable {
 	@PasswordValidator(message = "Password should be 8 characters Length with the "
 			+ "One Letter must be Capital and One Number Should Present")
 	private String password;
+	
+	@JsonIgnore
+	@Transient
+	private String role;
 
 }
