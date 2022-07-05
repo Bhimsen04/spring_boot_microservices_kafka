@@ -16,6 +16,19 @@ server:
 NotEmpty:
   customer:
     firstName: First name must be provided
+#logging:
+#  level:
+#    org.springframework: DEBUG
+logging:
+  file:
+    name: application.log
+    path: c:/weshopify-app/
+  logback:
+    rollingpolicy:
+      max-file-size: 1
+      max-history: 3
+      clean-history-on-start: true
+        
 ---
 # dev environment configurations
 spring:
@@ -30,7 +43,7 @@ spring:
       hibernate:
         dialect: ${DB_DIALECT:org.hibernate.dialect.MySQL8Dialect}
     hibernate:
-      ddl-auto: update
+      ddl-auto: update   # In DB, if tables is there will update otherwise insert new tables
     show-sql: true
 ---
 # qa environment configurations

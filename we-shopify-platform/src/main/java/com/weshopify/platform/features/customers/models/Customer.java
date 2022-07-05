@@ -27,20 +27,20 @@ public class Customer implements Serializable {
 	private boolean selfReg;
 	private String firstName;
 	private String lastName;
-	
+
 	@Column(unique = true, nullable = false, name = "username")
 	private String userName; // bydefault it is user_name
-	
+
 	@Column(unique = true, nullable = false)
 	private String email;
-	
+
 	// @Column(unique = true, updatable = true, nullable = false)
 	private String mobileNumber;
-	
+
 	@Column(nullable = false, updatable = true)
 	private String password;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne // (cascade = CascadeType.ALL)
 	private UserRole role;
 
 }

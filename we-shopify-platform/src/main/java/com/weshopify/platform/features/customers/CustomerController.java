@@ -7,6 +7,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -16,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.weshopify.platform.features.customers.models.Customer;
 import com.weshopify.platform.features.customers.service.CustomerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +33,12 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-
+ 
+	private TransactionDefinition txDef;
+	
+	@Autowired
+	private PlatformTransactionManager txManager;
+	
 	@RequestMapping("/customer")
 	public String customerSelfSignupPage() {
 		log.info("In customerSelfSignupPage() method");
@@ -42,6 +53,11 @@ public class CustomerController {
 	}
 
 	@RequestMapping("/view-customers")
+	@Transactional(isolation = Isolation.READ_COMMITTED,
+					propagation = Propagation.REQUIRED,
+					rollbackFor = Throwable.class,
+					timeout = 3,
+					readOnly = true)
 	public String viewCustomerPage(Model model) {
 		log.info("In viewCustomerPage() method");
 		int currentPage = 0, NoOfRecPerPage = 5;
@@ -50,6 +66,18 @@ public class CustomerController {
 		model.addAttribute("currentPage", currentPage + 1);
 		model.addAttribute("NoOfRecPerPage", NoOfRecPerPage);
 		model.addAttribute("customersList", customersList);
+		
+		txDef = new DefaultTransactionDefinition(Propagation.REQUIRED.value());
+		System.out.println("Tx isolation level :- " + txDef.getIsolationLevel());
+		System.out.println("Tx propagation behaviour :- " + txDef.getPropagationBehavior());
+		System.out.println("Tx timeout :- " + txDef.getTimeout());
+		
+		TransactionStatus txStatus =  txManager.getTransaction(txDef);
+		txManager.commit(txStatus);
+		
+		System.out.println("Tx status:- " + txStatus.isCompleted());
+		System.out.println("Does tx have savepoint:- " + txStatus.hasSavepoint());   // means rollback
+		
 		return "customer.html";
 	}
 
